@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite" parallel="tests">
+	<test name="Pixel_2">
+		<listeners>
+			<listener class-name="com.qa.listeners.TestListener" />
+		</listeners>
+		<parameter name="emulator" value="true" />
+		<parameter name="platformName" value="Android" />
+		<parameter name="udid" value="replace_with_device_udid" />
+		<parameter name="deviceName" value="Pixel_2" />
+		<parameter name="systemPort" value="10000" />
+		<parameter name="chromeDriverPort" value="11000" />
+		<classes>
+			<class name="com.qa.tests.LoginTests"></class>
+			<class name="com.qa.tests.ProductTests"></class>
+		</classes>
+	</test>
+	<test name="iPhone11">
+		<listeners>
+			<listener class-name="com.qa.listeners.TestListener" />
+		</listeners>
+		<parameter name="platformName" value="iOS" />
+		<parameter name="udid" value="replace_with_device_udid" />
+		<parameter name="deviceName" value="iPhone11" />
+		<parameter name="wdaLocalPort" value="10001" />
+		<parameter name="webkitDebugProxyPort" value="11001" />
+		<classes>
+			<class name="com.qa.tests.LoginTests"></class>
+			<class name="com.qa.tests.ProductTests"></class>
+		</classes>
+	</test>
+</suite> <!-- Suite -->
