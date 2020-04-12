@@ -2,7 +2,7 @@
 Appium mobile test automation framework with Page Object Model design using Java + Maven + TestNG
 
 - Watch me designing this framework step by step here (All parts): https://bit.ly/2SnDNx6
-- Watch complete Appium Tutorials from basic to advanced here: https://bit.ly/2PI2vbr
+- Watch complete Appium Tutorials from basic to advanced here: https://bit.ly/2XuyBeU
 - Subscribe to my channel here: https://bit.ly/2HNsidp
 
 Technologies/Tools used in building the framework:
