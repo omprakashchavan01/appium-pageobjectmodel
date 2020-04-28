@@ -2,9 +2,11 @@ package com.qa.tests;
 
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.Status;
 import com.qa.BaseTest;
 import com.qa.pages.LoginPage;
 import com.qa.pages.ProductsPage;
+import com.qa.reports.ExtentReport;
 import com.qa.utils.TestUtils;
 
 import io.appium.java_client.MobileElement;
@@ -69,8 +71,8 @@ public class LoginTests extends BaseTest{
 		  loginPage.enterUserName(loginUsers.getJSONObject("invalidUser").getString("username"));
 		  loginPage.enterPassword(loginUsers.getJSONObject("invalidUser").getString("password"));
 		  loginPage.pressLoginBtn();
-		  		  
-		  String actualErrTxt = loginPage.getErrTxt();
+		  
+		  String actualErrTxt = loginPage.getErrTxt() + "sdfdf";
 		  String expectedErrTxt = getStrings().get("err_invalid_username_or_password");
 		  
 		  Assert.assertEquals(actualErrTxt, expectedErrTxt);

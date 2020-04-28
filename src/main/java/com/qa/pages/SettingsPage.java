@@ -15,8 +15,7 @@ public class SettingsPage extends BaseTest{
 	private MobileElement logoutBtn;
 	
 	public LoginPage pressLogoutBtn() {
-		utils.log().info("press Logout button");
-		click(logoutBtn);
+		click(logoutBtn, "press Logout button");
 		return new LoginPage();
 	}
 

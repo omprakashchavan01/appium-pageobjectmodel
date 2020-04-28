@@ -28,22 +28,19 @@ public class LoginPage extends BaseTest {
 	private MobileElement errTxt;
 	
 public LoginPage enterUserName(String username) {
-	clear(usernameTxtFld);
-	utils.log().info("login with " + username);
-	sendKeys(usernameTxtFld, username);
+	clear(usernameTxtFld);	
+	sendKeys(usernameTxtFld, username, "login with " + username);
 	return this;
 }
 
 public LoginPage enterPassword(String password) {
 	clear(passwordTxtFld);
-	utils.log().info("password is " + password);
-	sendKeys(passwordTxtFld, password);
+	sendKeys(passwordTxtFld, password, "password is " + password);
 	return this;
 }
 
 public ProductsPage pressLoginBtn() {
-	utils.log().info("press login button");
-	click(loginBtn);
+	click(loginBtn, "press login button");
 	return new ProductsPage();
 }
 
@@ -54,8 +51,7 @@ public ProductsPage login(String username, String password) {
 }
 
 public String getErrTxt() {
-	String err = getText(errTxt);
-	utils.log().info("error text is - " + err);
+	String err = getText(errTxt, "error text is - ");
 	return err;
 }
 

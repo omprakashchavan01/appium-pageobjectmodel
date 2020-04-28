@@ -30,14 +30,12 @@ public class ProductDetailsPage extends MenuPage {
 	@iOSXCUITFindBy (id = "test-ADD TO CART") private MobileElement addToCartBtn;
 
 public String getSLBTitle() {
-	String title = getText(SLBTitle);
-	utils.log().info("title is - " + title);
+	String title = getText(SLBTitle, "title is - ");
 	return title;
 }
 
 public String getSLBTxt() {
-	String txt = getText(SLBTxt);
-	utils.log().info("txt is - " + txt);
+	String txt = getText(SLBTxt, "txt is - ");
 	return txt;
 }
 
@@ -47,7 +45,7 @@ public String getSLBTxt() {
 	 */
 
 public String scrollToSLBPriceAndGetSLBPrice() {
-	return getText(scrollToElement());
+	return getText(scrollToElement(), "");
 }
 
 public void scrollPage() {
@@ -59,8 +57,7 @@ public Boolean isAddToCartBtnDisplayed() {
 }
 
 public ProductsPage pressBackToProductsBtn() {
-	utils.log().info("navigate back to products page");
-	click(backToProductsBtn);
+	click(backToProductsBtn, "navigate back to products page");
 	return new ProductsPage();
 }
 

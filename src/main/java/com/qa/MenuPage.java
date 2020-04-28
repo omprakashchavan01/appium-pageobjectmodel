@@ -16,8 +16,7 @@ public class MenuPage extends BaseTest{
 	private MobileElement settingsBtn;
 	
 	public SettingsPage pressSettingsBtn() {
-		utils.log().info("press Settings button");
-		click(settingsBtn);
+		click(settingsBtn, "press Settings button");
 		return new SettingsPage();
 	}
 

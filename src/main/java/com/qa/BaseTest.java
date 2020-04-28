@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.net.ServerSocket;
 import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
@@ -27,13 +28,18 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.internal.TestNGMethod;
 
+import com.aventstack.extentreports.Status;
+import com.qa.reports.ExtentReport;
 import com.qa.utils.TestUtils;
 
 import io.appium.java_client.AppiumDriver;
@@ -44,6 +50,10 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.screenrecording.CanRecordScreen;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.service.local.flags.GeneralServerFlag;
 
 public class BaseTest {
 	protected static ThreadLocal <AppiumDriver> driver = new ThreadLocal<AppiumDriver>();
@@ -52,6 +62,7 @@ public class BaseTest {
 	protected static ThreadLocal <String> platform = new ThreadLocal<String>();
 	protected static ThreadLocal <String> dateTime = new ThreadLocal<String>();
 	protected static ThreadLocal <String> deviceName = new ThreadLocal<String>();
+	private static AppiumDriverLocalService server;
 	TestUtils utils = new TestUtils();
 	
 	  public AppiumDriver getDriver() {
@@ -142,13 +153,63 @@ public class BaseTest {
 		}		
 	}
 	
+	@BeforeSuite
+	public void beforeSuite() throws Exception, Exception {
+		ThreadContext.put("ROUTINGKEY", "ServerLogs");
+		server = getAppiumService();
+		if(!checkIfAppiumServerIsRunnning(4723)) {
+			server.start();
+			server.clearOutPutStreams();
+			utils.log().info("Appium server started");
+		} else {
+			utils.log().info("Appium server already running");
+		}	
+	}
+	
+	public boolean checkIfAppiumServerIsRunnning(int port) throws Exception {
+	    boolean isAppiumServerRunning = false;
+	    ServerSocket socket;
+	    try {
+	        socket = new ServerSocket(port);
+	        socket.close();
+	    } catch (IOException e) {
+	    	System.out.println("1");
+	        isAppiumServerRunning = true;
+	    } finally {
+	        socket = null;
+	    }
+	    return isAppiumServerRunning;
+	}
+	
+	@AfterSuite
+	public void afterSuite() {
+		server.stop();
+		utils.log().info("Appium server stopped");
+	}
+	
+	public AppiumDriverLocalService getAppiumServerDefault() {
+		return AppiumDriverLocalService.buildDefaultService();
+	}
+	
+	public AppiumDriverLocalService getAppiumService() {
+		HashMap<String, String> environment = new HashMap<String, String>();
+		environment.put("PATH", "/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/bin:/Users/Om/Library/Android/sdk/tools:/Users/Om/Library/Android/sdk/platform-tools:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" + System.getenv("PATH"));
+		environment.put("ANDROID_HOME", "/Users/Om/Library/Android/sdk");
+		return AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+				.usingDriverExecutable(new File("/usr/local/bin/node"))
+				.withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
+				.usingPort(4723)
+				.withArgument(GeneralServerFlag.SESSION_OVERRIDE)
+				.withEnvironment(environment)
+				.withLogFile(new File("ServerLogs/server.log")));
+	}
+	
   @Parameters({"emulator", "platformName", "udid", "deviceName", "systemPort", 
 	  "chromeDriverPort", "wdaLocalPort", "webkitDebugProxyPort"})
   @BeforeTest
   public void beforeTest(@Optional("androidOnly")String emulator, String platformName, String udid, String deviceName, 
 		  @Optional("androidOnly")String systemPort, @Optional("androidOnly")String chromeDriverPort, 
 		  @Optional("iOSOnly")String wdaLocalPort, @Optional("iOSOnly")String webkitDebugProxyPort) throws Exception {
-	  
 	  setDateTime(utils.dateTime());
 	  setPlatform(platformName);
 	  setDeviceName(deviceName);
@@ -194,6 +255,7 @@ public class BaseTest {
 				desiredCapabilities.setCapability("appActivity", props.getProperty("androidAppActivity"));
 				if(emulator.equalsIgnoreCase("true")) {
 					desiredCapabilities.setCapability("avd", deviceName);
+					desiredCapabilities.setCapability("avdLaunchTimeout", 120000);
 				}
 				desiredCapabilities.setCapability("systemPort", systemPort);
 				desiredCapabilities.setCapability("chromeDriverPort", chromeDriverPort);
@@ -256,8 +318,22 @@ public class BaseTest {
 	  e.click();
   }
   
+  public void click(MobileElement e, String msg) {
+	  waitForVisibility(e);
+	  utils.log().info(msg);
+	  ExtentReport.getTest().log(Status.INFO, msg);
+	  e.click();
+  }
+  
   public void sendKeys(MobileElement e, String txt) {
 	  waitForVisibility(e);
+	  e.sendKeys(txt);
+  }
+  
+  public void sendKeys(MobileElement e, String txt, String msg) {
+	  waitForVisibility(e);
+	  utils.log().info(msg);
+	  ExtentReport.getTest().log(Status.INFO, msg);
 	  e.sendKeys(txt);
   }
   
@@ -266,14 +342,19 @@ public class BaseTest {
 	  return e.getAttribute(attribute);
   }
   
-  public String getText(MobileElement e) {
+  public String getText(MobileElement e, String msg) {
+	  String txt = null;
 	  switch(getPlatform()) {
 	  case "Android":
-		  return getAttribute(e, "text");
+		  txt = getAttribute(e, "text");
+		  break;
 	  case "iOS":
-		  return getAttribute(e, "label");
+		  txt = getAttribute(e, "label");
+		  break;
 	  }
-	  return null;
+	  utils.log().info(msg + txt);
+	  ExtentReport.getTest().log(Status.INFO, msg);
+	  return txt;
   }
   
   public void closeApp() {
