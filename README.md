@@ -5,7 +5,8 @@ Appium mobile test automation framework with Page Object Model design using Java
 - Appium Tutorials from basic to advanced here: https://bit.ly/2XuyBeU
 - Subscribe to my channel here: https://bit.ly/2HNsidp
 
-Technologies/Tools used in building the framework:
+Technologies/Tools used in building the framework
+=================================================
 - Eclipse - IDE
 - Appium - Mobile Automation library
 - Maven - Build automation tool
@@ -18,7 +19,8 @@ Technologies/Tools used in building the framework:
 - GitHub - Version control
 - Jenkins - CI/CD
 
-Framework implements below best practices:
+Framework implements below best practices
+=========================================
 - Code reusability
 - Code readability
 - Scalable automation (demonstrated using multiple test classes)
