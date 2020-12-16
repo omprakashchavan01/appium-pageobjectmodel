@@ -33,5 +33,4 @@ videos
 .zprofile
 *.html
 *.iml
-Logs
-Src
+logs
