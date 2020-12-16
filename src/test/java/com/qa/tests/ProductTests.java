@@ -1,31 +1,18 @@
 package com.qa.tests;
 
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-
 import com.qa.BaseTest;
 import com.qa.pages.LoginPage;
 import com.qa.pages.ProductDetailsPage;
 import com.qa.pages.ProductsPage;
 import com.qa.pages.SettingsPage;
 import com.qa.utils.TestUtils;
-
-import io.appium.java_client.MobileElement;
-
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.lang.reflect.Method;
-
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
+
+import java.io.InputStream;
+import java.lang.reflect.Method;
 
 public class ProductTests extends BaseTest{
 	LoginPage loginPage;

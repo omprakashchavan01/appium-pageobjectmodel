@@ -1,19 +1,19 @@
 package com.qa;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.net.ServerSocket;
-import java.net.URL;
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
 import com.aventstack.extentreports.Status;
+import com.qa.reports.ExtentReport;
+import com.qa.utils.TestUtils;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.FindsByAndroidUIAutomator;
+import io.appium.java_client.InteractsWithApps;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.screenrecording.CanRecordScreen;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.logging.log4j.ThreadContext;
 import org.openqa.selenium.By;
@@ -28,32 +28,18 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import org.testng.internal.TestNGMethod;
+import org.testng.annotations.*;
 
-import com.qa.reports.ExtentReport;
-import com.qa.utils.TestUtils;
-
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.FindsByAndroidUIAutomator;
-import io.appium.java_client.InteractsWithApps;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import io.appium.java_client.screenrecording.CanRecordScreen;
-import io.appium.java_client.service.local.AppiumDriverLocalService;
-import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
-import io.appium.java_client.service.local.AppiumServiceBuilder;
-import io.appium.java_client.service.local.flags.GeneralServerFlag;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.ServerSocket;
+import java.net.URL;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 public class BaseTest {
 	protected static ThreadLocal <AppiumDriver> driver = new ThreadLocal<AppiumDriver>();

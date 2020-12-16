@@ -1,12 +1,12 @@
 package com.qa.reports;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExtentReport {
     static ExtentReports extent;
