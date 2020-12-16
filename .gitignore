@@ -28,3 +28,10 @@ Screenshots
 target
 test-output
 videos
+.DS_Store
+.idea/
+.zprofile
+*.html
+*.iml
+Logs
+Src

@@ -72,7 +72,7 @@ public class LoginTests extends BaseTest{
 		  loginPage.enterPassword(loginUsers.getJSONObject("invalidUser").getString("password"));
 		  loginPage.pressLoginBtn();
 		  
-		  String actualErrTxt = loginPage.getErrTxt() + "sdfdf";
+		  String actualErrTxt = loginPage.getErrTxt();
 		  String expectedErrTxt = getStrings().get("err_invalid_username_or_password");
 		  
 		  Assert.assertEquals(actualErrTxt, expectedErrTxt);

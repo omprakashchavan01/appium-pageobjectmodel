@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class ExtentReport {
@@ -15,7 +15,7 @@ public class ExtentReport {
     
     public synchronized static ExtentReports getReporter() {
         if (extent == null) {
-        	ExtentHtmlReporter html = new ExtentHtmlReporter("Extent.html");
+        	ExtentSparkReporter html = new ExtentSparkReporter("Extent.html");
         	html.config().setDocumentTitle("Appium Framework");
         	html.config().setReportName("MyApp");
         	html.config().setTheme(Theme.DARK);

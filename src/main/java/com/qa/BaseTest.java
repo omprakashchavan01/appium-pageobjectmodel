@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import com.aventstack.extentreports.Status;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.logging.log4j.ThreadContext;
 import org.openqa.selenium.By;
@@ -38,7 +39,6 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.internal.TestNGMethod;
 
-import com.aventstack.extentreports.Status;
 import com.qa.reports.ExtentReport;
 import com.qa.utils.TestUtils;
 
@@ -193,8 +193,8 @@ public class BaseTest {
 	
 	public AppiumDriverLocalService getAppiumService() {
 		HashMap<String, String> environment = new HashMap<String, String>();
-		environment.put("PATH", "/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/bin:/Users/Om/Library/Android/sdk/tools:/Users/Om/Library/Android/sdk/platform-tools:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" + System.getenv("PATH"));
-		environment.put("ANDROID_HOME", "/Users/Om/Library/Android/sdk");
+		environment.put("PATH", "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin:/Users/omprakashchavan/Library/Android/sdk/tools:/Users/omprakashchavan/Library/Android/sdk/platform-tools:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin" + System.getenv("PATH"));
+		environment.put("ANDROID_HOME", "/Users/omprakashchavan/Library/Android/sdk");
 		return AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
 				.usingDriverExecutable(new File("/usr/local/bin/node"))
 				.withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
@@ -353,7 +353,7 @@ public class BaseTest {
 		  break;
 	  }
 	  utils.log().info(msg + txt);
-	  ExtentReport.getTest().log(Status.INFO, msg);
+	  ExtentReport.getTest().log(Status.INFO, msg + txt);
 	  return txt;
   }
   
