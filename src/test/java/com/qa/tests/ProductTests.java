@@ -93,7 +93,7 @@ public class ProductTests extends BaseTest{
 			  productDetailsPage.scrollPage();
 			  sa.assertTrue(productDetailsPage.isAddToCartBtnDisplayed());  
 		  }		  		  
-		  productsPage = productDetailsPage.pressBackToProductsBtn();
+//		  productsPage = productDetailsPage.pressBackToProductsBtn(); // -> Commented as this is causing stale element exception for the Settings icon
 		  
 		  sa.assertAll();
 	  }
