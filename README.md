@@ -4,7 +4,7 @@ Framework follows many of the industry best practices and supports Android and i
 
 **Step by step instructions to build this framework from scratch is in this Highest Rated Udemy course.
 Enroll today at the minimal rate of INR 570/ $12.99.
-Link with coupon code: https://www.udemy.com/course/the-complete-appium-course-for-ios-and-android/?couponCode=MASTERAPPIUM19**
+Link with coupon code: https://www.udemy.com/course/the-complete-appium-course-for-ios-and-android/?couponCode=DEC021**
 
 ![One of the most comprehensive Appium course ever created](/CourseLandingPage.PNG)
 
