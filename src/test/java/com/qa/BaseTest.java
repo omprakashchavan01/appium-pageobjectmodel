@@ -135,8 +135,8 @@ public class BaseTest {
 	@BeforeSuite
 	public void beforeSuite() throws Exception, Exception {
 		ThreadContext.put("ROUTINGKEY", "ServerLogs");
-		server = getAppiumService(); // -> If using Mac, uncomment this statement and comment below statement
-//		server = getAppiumServerDefault(); // -> If using Windows, uncomment this statement and comment above statement
+//		server = getAppiumService(); // -> If using Mac, uncomment this statement and comment below statement
+		server = getAppiumServerDefault(); // -> If using Windows, uncomment this statement and comment above statement
 		if(!checkIfAppiumServerIsRunnning(4723)) {
 			server.start();
 			server.clearOutPutStreams(); // -> Comment this if you want to see server logs in the console
