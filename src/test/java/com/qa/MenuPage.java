@@ -11,7 +11,7 @@ public class MenuPage extends BaseTest {
 	
 	@AndroidFindBy (xpath="//android.view.ViewGroup[@content-desc=\"test-Menu\"]/android.view.ViewGroup/android.widget.ImageView\n" + 
 			"") 
-	@iOSXCUITFindBy (id="//XCUIElementTypeOther[@name=\"test-Menu\"]/XCUIElementTypeOther")
+	@iOSXCUITFindBy (xpath="//XCUIElementTypeOther[@name=\"test-Menu\"]/XCUIElementTypeOther")
 	private WebElement settingsBtn;
 	
 	public SettingsPage pressSettingsBtn() {
