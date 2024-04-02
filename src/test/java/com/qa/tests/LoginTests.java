@@ -34,8 +34,12 @@ public class LoginTests extends BaseTest{
 				  datais.close();
 			  }
 		  }
-		  closeApp();
-		  launchApp();
+		  /*
+		  To ensure each test starts with a fresh app state, closeApp() and launchApp() have been moved to the
+		  @BeforeMethod section.
+		  // closeApp();
+		  // launchApp();
+		  */
 	  }
 
 	  @AfterClass
@@ -44,6 +48,9 @@ public class LoginTests extends BaseTest{
 	  
 	  @BeforeMethod
 	  public void beforeMethod(Method m) {
+		  closeApp();
+		  launchApp();
+
 		  utils.log().info("\n" + "****** starting test:" + m.getName() + "******" + "\n");
 		  loginPage = new LoginPage();
 	  }

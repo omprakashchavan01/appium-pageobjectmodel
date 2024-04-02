@@ -3,8 +3,10 @@ package com.qa.pages;
 import com.qa.MenuPage;
 import com.qa.utils.TestUtils;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 
 public class ProductDetailsPage extends MenuPage {
 	TestUtils utils = new TestUtils();
@@ -26,6 +28,10 @@ public class ProductDetailsPage extends MenuPage {
 	private WebElement backToProductsBtn;
 	
 	@iOSXCUITFindBy (id = "test-ADD TO CART") private WebElement addToCartBtn;
+
+	public ProductDetailsPage(){
+		PageFactory.initElements(new AppiumFieldDecorator(getDriver()), this);
+	}
 
 public String getSLBTitle() {
 	String title = getText(SLBTitle, "title is - ");

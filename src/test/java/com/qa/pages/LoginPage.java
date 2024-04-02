@@ -3,8 +3,10 @@ package com.qa.pages;
 import com.qa.BaseTest;
 import com.qa.utils.TestUtils;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends BaseTest {
 	TestUtils utils = new TestUtils();
@@ -23,6 +25,10 @@ public class LoginPage extends BaseTest {
 	@AndroidFindBy (xpath = "//android.view.ViewGroup[@content-desc=\"test-Error message\"]/android.widget.TextView") 
 	@iOSXCUITFindBy (xpath = "//XCUIElementTypeOther[@name=\"test-Error message\"]/child::XCUIElementTypeStaticText")
 	private WebElement errTxt;
+
+	public LoginPage(){
+		PageFactory.initElements(new AppiumFieldDecorator(getDriver()), this);
+	}
 	
 public LoginPage enterUserName(String username) {
 	clear(usernameTxtFld);	

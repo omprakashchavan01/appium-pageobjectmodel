@@ -93,7 +93,13 @@ public class BaseTest {
 	  }
 	
 	public BaseTest() {
-		PageFactory.initElements(new AppiumFieldDecorator(getDriver()), this);
+	/*
+	In Appium java client versions 9.x.x and later, passing a null driver at the beginning of execution is not
+	permitted, unlike in previous versions. To resolve this issue, comment out the line below and move it into
+	the constructor of each page object class. This ensures that the driver is initialized before the BaseTest
+	constructor is called, preventing it from being null.
+	// PageFactory.initElements(new AppiumFieldDecorator(getDriver()), this);
+	 */
 	}
 	
 	@BeforeMethod

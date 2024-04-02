@@ -38,8 +38,12 @@ public class ProductTests extends BaseTest{
 				  datais.close();
 			  }
 		  }
-		  closeApp();
-		  launchApp();
+		  /*
+		  To ensure each test starts with a fresh app state, closeApp() and launchApp() have been moved to the
+		  @BeforeMethod section.
+		  // closeApp();
+		  // launchApp();
+		  */
 	  }
 
 	  @AfterClass
@@ -48,20 +52,48 @@ public class ProductTests extends BaseTest{
 	  
 	  @BeforeMethod
 	  public void beforeMethod(Method m) {
+		  closeApp();
+		  launchApp();
+
 		  utils.log().info("\n" + "****** starting test:" + m.getName() + "******" + "\n");
-		  loginPage = new LoginPage();		  
-		  productsPage = loginPage.login(loginUsers.getJSONObject("validUser").getString("username"), 
-				  loginUsers.getJSONObject("validUser").getString("password"));
+
+		/*
+		The following commented code was moved to individual test methods to solve the problem:
+		java.lang.NullPointerException ... because "com.qa.reports.ExtentReport.getTest()" returns null.
+
+		We also moved closeApp() and launchApp() to @BeforeMethod to give clean app state to each test method.
+
+		Explanation:
+
+		The error occurs because the method getTest() in ExtentReport is called before createTest() has a chance to run.
+		In TestNG, the @BeforeMethod code runs before the onTestStart() listener method, where the createTest() of
+		Extent Report is supposed to be called. This leads to a situation where ExtentReport has not been properly set up yet,
+		resulting in a null value.
+
+		Therefore, when the login code is executed, it tries to use this uninitialized Extent Report, leading to the
+		null pointer exception when calling the getTest() method. This happens during UI actions, such as click().
+
+		// loginPage = new LoginPage();
+		// productsPage = loginPage.login(loginUsers.getJSONObject("validUser").getString("username"),
+		//              loginUsers.getJSONObject("validUser").getString("password"));
+		*/
 	  }
 
 	  @AfterMethod
 	  public void afterMethod() {
-		  settingsPage = productsPage.pressSettingsBtn();
-		  loginPage = settingsPage.pressLogoutBtn();
+		/*
+		The code below is no longer needed because closeApp() and launchApp() have been moved to @BeforeMethod:
+		// settingsPage = productsPage.pressSettingsBtn();
+		// loginPage = settingsPage.pressLogoutBtn();
+		*/
 	  }
 	  
 	  @Test
 	  public void validateProductOnProductsPage() {
+		  loginPage = new LoginPage();
+		  productsPage = loginPage.login(loginUsers.getJSONObject("validUser").getString("username"),
+				  loginUsers.getJSONObject("validUser").getString("password"));
+
 		  SoftAssert sa = new SoftAssert();
 		  
 		  String SLBTitle = productsPage.getSLBTitle();
@@ -75,6 +107,10 @@ public class ProductTests extends BaseTest{
 	  
 	  @Test
 	  public void validateProductOnProductDetailsPage() {
+		  loginPage = new LoginPage();
+		  productsPage = loginPage.login(loginUsers.getJSONObject("validUser").getString("username"),
+				  loginUsers.getJSONObject("validUser").getString("password"));
+
 		  SoftAssert sa = new SoftAssert();
 		  
 		  productDetailsPage = productsPage.pressSLBTitle();
